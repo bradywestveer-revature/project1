@@ -1,0 +1,83 @@
+package frontcontroller;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
+import controllers.RequestController;
+import controllers.UserController;
+import exceptions.InvalidBodyException;
+import exceptions.InvalidCredentialsException;
+import exceptions.NotFoundException;
+import exceptions.UnauthorizedException;
+import io.javalin.Javalin;
+
+import org.apache.log4j.Logger;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
+import responsemodels.ErrorResponse;
+
+import java.sql.SQLException;
+
+import static io.javalin.apibuilder.ApiBuilder.*;
+
+public class Dispatcher {
+	public Dispatcher (Javalin webServer) {
+		webServer.routes (() -> {
+			path ("api", () -> {
+				path ("sessions", () -> {
+					post (UserController::logInUser);
+					delete (UserController::logOutUser);
+				});
+				
+				path ("requests", () -> {
+					get (RequestController::getRequests);
+					post (RequestController::createRequest);
+					put (RequestController::updateRequest);
+				});
+			});
+		});
+		
+		Logger logger = Logger.getLogger (Dispatcher.class);
+		
+		webServer.exception (Exception.class, ((exception, context) -> {
+			logger.error ("Error!", exception);
+			
+			if (exception.getClass () == InvalidBodyException.class || exception.getClass () == JsonProcessingException.class || exception.getClass () == JsonParseException.class || exception.getClass () == MismatchedInputException.class || exception.getClass () == UnrecognizedPropertyException.class || exception.getClass () == InvalidFormatException.class) {
+				context.status (400);
+				
+				context.json (new ErrorResponse ("Error! Invalid body"));
+			}
+			
+			else if (exception.getClass () == InvalidCredentialsException.class) {
+				context.status (401);
+				
+				context.json (new ErrorResponse ("Error! Invalid credentials"));
+			}
+			
+			else if (exception.getClass () == UnauthorizedException.class) {
+				context.status (401);
+				
+				context.json (new ErrorResponse ("Error! Unauthorized"));
+			}
+			
+			else if (exception.getClass () == SQLException.class) {
+				context.status (500);
+				
+				context.json (new ErrorResponse ("Error! SQL error"));
+			}
+			
+			else if (exception.getClass () == NotFoundException.class) {
+				context.status (404);
+				
+				context.json (new ErrorResponse (exception.getMessage ()));
+			}
+			
+			else {
+				context.status (500);
+				
+				context.json (new ErrorResponse ("Error! " + exception.getClass ().toString ()));
+			}
+		}));
+	}
+}

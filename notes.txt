@@ -1,0 +1,12 @@
+frontend
+tests
+
+on all context results, log result/exception
+where to put length constraints? like varchar length
+optional stuff
+use session to allow users not to login every time
+extra stuff
+add mvn build system
+multiple pages with index.html for each folder, that way we can do localhost/requests to go to requests.html
+deploy to ec2
+intellij cleanup code
