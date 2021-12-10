@@ -1,6 +1,4 @@
-package bodymodels;
-
-import models.RequestType;
+package jsonmodels;
 
 public class UpdateRequestBody {
 	private Integer id;

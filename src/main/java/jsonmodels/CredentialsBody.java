@@ -1,4 +1,4 @@
-package bodymodels;
+package jsonmodels;
 
 public class CredentialsBody {
 	private String username;

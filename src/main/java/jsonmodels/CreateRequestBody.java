@@ -1,4 +1,4 @@
-package bodymodels;
+package jsonmodels;
 
 import models.RequestType;
 

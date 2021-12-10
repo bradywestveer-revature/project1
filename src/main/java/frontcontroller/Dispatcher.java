@@ -14,8 +14,7 @@ import exceptions.UnauthorizedException;
 import io.javalin.Javalin;
 
 import org.apache.log4j.Logger;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
-import responsemodels.ErrorResponse;
+import jsonmodels.JsonResponse;
 
 import java.sql.SQLException;
 
@@ -46,37 +45,37 @@ public class Dispatcher {
 			if (exception.getClass () == InvalidBodyException.class || exception.getClass () == JsonProcessingException.class || exception.getClass () == JsonParseException.class || exception.getClass () == MismatchedInputException.class || exception.getClass () == UnrecognizedPropertyException.class || exception.getClass () == InvalidFormatException.class) {
 				context.status (400);
 				
-				context.json (new ErrorResponse ("Error! Invalid body"));
+				context.json (new JsonResponse ("Error! Invalid body", false));
 			}
 			
 			else if (exception.getClass () == InvalidCredentialsException.class) {
 				context.status (401);
 				
-				context.json (new ErrorResponse ("Error! Invalid credentials"));
+				context.json (new JsonResponse ("Error! Invalid credentials", false));
 			}
 			
 			else if (exception.getClass () == UnauthorizedException.class) {
 				context.status (401);
 				
-				context.json (new ErrorResponse ("Error! Unauthorized"));
+				context.json (new JsonResponse ("Error! Unauthorized", false));
 			}
 			
 			else if (exception.getClass () == SQLException.class) {
 				context.status (500);
 				
-				context.json (new ErrorResponse ("Error! SQL error"));
+				context.json (new JsonResponse ("Error! SQL error", false));
 			}
 			
 			else if (exception.getClass () == NotFoundException.class) {
 				context.status (404);
 				
-				context.json (new ErrorResponse (exception.getMessage ()));
+				context.json (new JsonResponse (exception.getMessage (), false));
 			}
 			
 			else {
 				context.status (500);
 				
-				context.json (new ErrorResponse ("Error! " + exception.getClass ().toString ()));
+				context.json (new JsonResponse ("Error! " + exception.getClass ().toString (), false));
 			}
 		}));
 	}

@@ -1,14 +1,12 @@
 package controllers;
 
-import bodymodels.CredentialsBody;
+import jsonmodels.CredentialsBody;
 import exceptions.InvalidBodyException;
 import exceptions.InvalidCredentialsException;
 import exceptions.UnauthorizedException;
 import io.javalin.http.Context;
 import models.User;
-import responsemodels.ErrorResponse;
-import responsemodels.LoginResponse;
-import responsemodels.MessageResponse;
+import jsonmodels.JsonResponse;
 import services.UserService;
 
 import java.sql.SQLException;
@@ -30,18 +28,16 @@ public class UserController {
 		
 		context.sessionAttribute ("user", user);
 		
-		context.json (new LoginResponse (user.getRole ().name ()));
+		context.json (new JsonResponse ("Logged in", true, user.getRole ().name ()));
 	}
 	
-	public static void logOutUser (Context context) {
+	public static void logOutUser (Context context) throws UnauthorizedException {
 		if (context.sessionAttribute ("user") == null) {
-			context.json (new ErrorResponse ("Error! Not logged in"));
-			
-			return;
+			throw new UnauthorizedException ();
 		}
 		
 		context.sessionAttribute ("user", null);
 		
-		context.json (new MessageResponse ("Logged out"));
+		context.json (new JsonResponse ("Logged out", true));
 	}
 }

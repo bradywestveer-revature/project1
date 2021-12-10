@@ -1,19 +1,20 @@
 package controllers;
 
-import bodymodels.CreateRequestBody;
-import bodymodels.CredentialsBody;
-import bodymodels.UpdateRequestBody;
+import jsonmodels.CreateRequestBody;
+import jsonmodels.UpdateRequestBody;
 import exceptions.InvalidBodyException;
 import exceptions.NotFoundException;
 import exceptions.UnauthorizedException;
 import io.javalin.http.Context;
+import models.Request;
 import models.RequestType;
 import models.User;
 import models.UserRole;
-import responsemodels.MessageResponse;
+import jsonmodels.JsonResponse;
 import services.RequestService;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class RequestController {
 	private static final RequestService requestService = new RequestService ();
@@ -43,7 +44,7 @@ public class RequestController {
 		
 		requestService.createRequest (amount, description, user.getId (), type);
 		
-		context.json (new MessageResponse ("Created request"));
+		context.json (new JsonResponse ("Created request", true));
 	}
 	
 	public static void getRequests (Context context) throws UnauthorizedException, SQLException {
@@ -56,12 +57,16 @@ public class RequestController {
 		
 		//if user is a manager
 		if (user.getRole () == UserRole.MANAGER) {
-			context.json (requestService.getRequests ());
+			List <Request> requests = requestService.getRequests ();
+			
+			context.json (new JsonResponse ("Got " + requests.size () + " requests", true, requests));
 		}
 		
 		//if user is not a manager
 		else {
-			context.json (requestService.getRequests (user.getId ()));
+			List <Request> requests = requestService.getRequests (user.getId ());
+			
+			context.json (new JsonResponse ("Got " + requests.size () + " requests", true, requests));
 		}
 	}
 	
@@ -89,6 +94,6 @@ public class RequestController {
 		
 		requestService.updateRequest (id, user.getId (), approved);
 		
-		context.json (new MessageResponse ("Updated request"));
+		context.json (new JsonResponse ("Updated request", true));
 	}
 }
