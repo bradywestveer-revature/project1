@@ -9,13 +9,13 @@ public class Request {
 	private String resolved;
 	private String description;
 	private int authorId;
-	private int resolverId;
+	private Integer resolverId;
 	private RequestStatus status;
 	private RequestType type;
 	
 	public Request () {}
 	
-	public Request (int id, float amount, String submitted, String resolved, String description, int authorId, int resolverId, RequestStatus status, RequestType type) {
+	public Request (int id, float amount, String submitted, String resolved, String description, int authorId, Integer resolverId, RequestStatus status, RequestType type) {
 		this.id = id;
 		this.amount = amount;
 		this.submitted = submitted;
@@ -75,11 +75,11 @@ public class Request {
 		this.authorId = authorId;
 	}
 	
-	public int getResolverId () {
+	public Integer getResolverId () {
 		return resolverId;
 	}
 	
-	public void setResolverId (int resolverId) {
+	public void setResolverId (Integer resolverId) {
 		this.resolverId = resolverId;
 	}
 	
@@ -104,7 +104,7 @@ public class Request {
 		if (this == o) return true;
 		if (o == null || getClass () != o.getClass ()) return false;
 		Request request = (Request) o;
-		return id == request.id && Float.compare (request.amount, amount) == 0 && authorId == request.authorId && resolverId == request.resolverId && Objects.equals (submitted, request.submitted) && Objects.equals (resolved, request.resolved) && Objects.equals (description, request.description) && status == request.status && type == request.type;
+		return id == request.id && Float.compare (request.amount, amount) == 0 && authorId == request.authorId && Objects.equals (resolverId, request.resolverId) && Objects.equals (submitted, request.submitted) && Objects.equals (resolved, request.resolved) && Objects.equals (description, request.description) && status == request.status && type == request.type;
 	}
 	
 	@Override

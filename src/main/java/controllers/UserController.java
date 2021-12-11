@@ -1,8 +1,9 @@
 package controllers;
 
+import exceptions.NotFoundException;
 import jsonmodels.CredentialsBody;
 import exceptions.InvalidBodyException;
-import exceptions.InvalidCredentialsException;
+import exceptions.InvalidPasswordException;
 import exceptions.UnauthorizedException;
 import io.javalin.http.Context;
 import models.User;
@@ -14,7 +15,7 @@ import java.sql.SQLException;
 public class UserController {
 	private static final UserService userService = new UserService ();
 	
-	public static void logInUser (Context context) throws InvalidBodyException, InvalidCredentialsException, SQLException, UnauthorizedException {
+	public static void logInUser (Context context) throws InvalidBodyException, InvalidPasswordException, SQLException, UnauthorizedException, NotFoundException {
 		CredentialsBody body = context.bodyAsClass (CredentialsBody.class);
 		
 		String username = body.getUsername ();
@@ -28,7 +29,9 @@ public class UserController {
 		
 		context.sessionAttribute ("user", user);
 		
-		context.json (new JsonResponse ("Logged in", true, user.getRole ().name ()));
+		context.json (new JsonResponse ("Logged in", true));
+		
+		context.redirect ("/");
 	}
 	
 	public static void logOutUser (Context context) throws UnauthorizedException {

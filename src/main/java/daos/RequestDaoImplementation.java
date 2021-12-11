@@ -80,21 +80,6 @@ public class RequestDaoImplementation implements RequestDao {
 	
 	@Override
 	public void updateRequest (Integer id, Integer resolverId, Boolean approved) throws SQLException, NotFoundException {
-		/*
-		
-		todo
-		set request resolved to now()
-		set request resolver to userId
-		
-		if body.approve
-			set request status to APPROVED
-		else
-			set request status to DENIED
-		
-		 */
-		
-		
-		
 		try (Connection connection = DriverManager.getConnection (this.url, this.username, this.password)) {
 			PreparedStatement statement = connection.prepareStatement ("UPDATE ERS_REIMBURSEMENT SET REIMB_RESOLVED = now (), REIMB_RESOLVER = ?, REIMB_STATUS_ID = ? WHERE REIMB_ID = ?;");
 			

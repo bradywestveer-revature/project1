@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import controllers.RequestController;
 import controllers.UserController;
 import exceptions.InvalidBodyException;
-import exceptions.InvalidCredentialsException;
+import exceptions.InvalidPasswordException;
 import exceptions.NotFoundException;
 import exceptions.UnauthorizedException;
 import io.javalin.Javalin;
@@ -30,8 +30,8 @@ public class Dispatcher {
 				});
 				
 				path ("requests", () -> {
-					get (RequestController::getRequests);
 					post (RequestController::createRequest);
+					get (RequestController::getRequests);
 					put (RequestController::updateRequest);
 				});
 			});
@@ -48,16 +48,18 @@ public class Dispatcher {
 				context.json (new JsonResponse ("Error! Invalid body", false));
 			}
 			
-			else if (exception.getClass () == InvalidCredentialsException.class) {
+			else if (exception.getClass () == InvalidPasswordException.class) {
 				context.status (401);
 				
-				context.json (new JsonResponse ("Error! Invalid credentials", false));
+				context.json (new JsonResponse ("Error! Invalid password", false));
 			}
 			
 			else if (exception.getClass () == UnauthorizedException.class) {
 				context.status (401);
 				
 				context.json (new JsonResponse ("Error! Unauthorized", false));
+				
+				context.redirect ("/login");
 			}
 			
 			else if (exception.getClass () == SQLException.class) {

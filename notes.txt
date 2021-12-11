@@ -1,12 +1,71 @@
-frontend
+FRONTEND
+	filter dropdown, None, Pending, Approved, Denied
+		store request results in local array
+		
+		on filter:
+			clear requests children, then:
+			
+			None
+				sort by submitted date most recent at the top, then sort by status, pending or not pending
+			Pending
+				show only pending, sort by submitted date most recent at the top
+			Approved
+				show only approved, sort by submitted date most recent at the top
+			Denied
+				show only approved, sort by submitted date most recent at the top
+	
+	logged in as "username", logout button all top right
+	
+	create request
+		only show if role is EMPLOYEE
+		inputs for amount, type, and description in that order, and submit button
+			onclick, fetch POST /api/requests
+				{
+					"type": ...
+					"amount": ...
+					"description": ...
+				}
+			clear request elements (might have to wait for db to update?)
+			get requests again
+	
+	update request
+		approveButton.onclick
+			fetch PUT /api/requests
+				{
+					"id": ...,
+					"approve": true
+				}
+				clear request elements (might have to wait for db to update?)
+				get requests again
+		denyButton.onclick
+			fetch PUT /api/requests
+				{
+					"id": ...,
+					"approve": false
+				}
+				clear request elements (might have to wait for db to update?)
+				get requests again
+	
+	show error messages to user
+
 tests
 
+selenium automation
+	employee logs in and creates new request
+
 add database table constraints to service layer
+
 optional stuff
-use session to allow users not to login every time
+	add mvn build system
+	deploy to ec2
+	hash passwords
+	allow receipts
+	email notifications
+	selenium testing
+	pagination?
+
 extra stuff
-add mvn build system
-multiple pages with index.html for each folder, that way we can do localhost/requests to go to requests.html
-deploy to ec2
+
+//todos
+
 intellij cleanup code
-make Response parent class of responses

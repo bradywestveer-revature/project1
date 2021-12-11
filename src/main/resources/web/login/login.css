@@ -1,0 +1,15 @@
+#login {
+	width: 40vmin;
+	height: 50vmin;
+	gap: 10px;
+	flex-grow: 1;
+}
+
+#login > * {
+	width: 55vmin;
+	max-width: 300px;
+}
+
+#usernameInput, #passwordInput, #loginButton {
+	font-size: 18px;
+}

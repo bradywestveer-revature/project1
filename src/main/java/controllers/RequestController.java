@@ -1,7 +1,6 @@
 package controllers;
 
-import jsonmodels.CreateRequestBody;
-import jsonmodels.UpdateRequestBody;
+import jsonmodels.*;
 import exceptions.InvalidBodyException;
 import exceptions.NotFoundException;
 import exceptions.UnauthorizedException;
@@ -10,7 +9,6 @@ import models.Request;
 import models.RequestType;
 import models.User;
 import models.UserRole;
-import jsonmodels.JsonResponse;
 import services.RequestService;
 
 import java.sql.SQLException;
@@ -47,7 +45,7 @@ public class RequestController {
 		context.json (new JsonResponse ("Created request", true));
 	}
 	
-	public static void getRequests (Context context) throws UnauthorizedException, SQLException {
+	public static void getRequests (Context context) throws UnauthorizedException, SQLException, NotFoundException {
 		User user = context.sessionAttribute ("user");
 		
 		//if user is not logged in
@@ -55,19 +53,10 @@ public class RequestController {
 			throw new UnauthorizedException ();
 		}
 		
-		//if user is a manager
-		if (user.getRole () == UserRole.MANAGER) {
-			List <Request> requests = requestService.getRequests ();
-			
-			context.json (new JsonResponse ("Got " + requests.size () + " requests", true, requests));
-		}
+		//get requests based on user role
+		List <RequestResponse> requests = user.getRole () == UserRole.MANAGER ? requestService.getRequests () : requestService.getRequests (user.getId ());
 		
-		//if user is not a manager
-		else {
-			List <Request> requests = requestService.getRequests (user.getId ());
-			
-			context.json (new JsonResponse ("Got " + requests.size () + " requests", true, requests));
-		}
+		context.json (new JsonResponse ("Got " + requests.size () + " requests", true, new RequestsResponse (user.getRole ().name (), requests)));
 	}
 	
 	public static void updateRequest (Context context) throws InvalidBodyException, UnauthorizedException, SQLException, NotFoundException {

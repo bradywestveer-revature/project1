@@ -1,0 +1,63 @@
+@media (hover: hover) {
+	.requestApprovedButton:hover {
+		background-color: #11D975;
+	}
+
+	.requestApprovedButton:active {
+		background-color: #00C864;
+	}
+
+	.requestDeniedButton:hover {
+		background-color: #F72F2F;
+	}
+
+	.requestDeniedButton:active {
+		background-color: #E61E1E;
+	}
+}
+
+.request {
+	width: 100%;
+	padding: 15px;
+	background: #333;
+	box-sizing: border-box;
+	justify-content: space-between;
+}
+
+.request p {
+	padding: 0;
+}
+
+.requestInfo1 {
+	max-width: 50%;
+}
+
+.requestApprovedText {
+	color: #00C864;
+}
+
+.requestDeniedText {
+	color: #E61E1E;
+}
+
+.requestButton {
+	padding: 10px;
+}
+
+.requestApprovedButton {
+	background-color: #00C864;
+}
+
+.requestDeniedButton {
+	background-color: #E61E1E;
+}
+
+#requests {
+	width: 60%;
+	padding: 10px;
+	gap: 10px;
+	justify-content: flex-start;
+	box-sizing: border-box;
+	overflow-y: scroll;
+	flex-grow: 1;
+}

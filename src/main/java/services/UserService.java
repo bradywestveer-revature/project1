@@ -2,7 +2,8 @@ package services;
 
 import daos.UserDao;
 import daos.UserDaoImplementation;
-import exceptions.InvalidCredentialsException;
+import exceptions.InvalidPasswordException;
+import exceptions.NotFoundException;
 import exceptions.UnauthorizedException;
 import models.User;
 
@@ -19,15 +20,13 @@ public class UserService {
 		this.userDao = userDao;
 	}
 	
-	public User logInUser (String username, String password) throws InvalidCredentialsException, SQLException, UnauthorizedException {
+	public User logInUser (String username, String password) throws InvalidPasswordException, SQLException, UnauthorizedException, NotFoundException {
 		User user = userDao.getUser (username);
 		
-		if (user.getPassword ().equals (password)) {
-			return user;
+		if (user == null || !user.getPassword ().equals (password)) {
+			throw new InvalidPasswordException ();
 		}
 		
-		else {
-			throw new InvalidCredentialsException ();
-		}
+		return user;
 	}
 }
