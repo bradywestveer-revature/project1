@@ -7,7 +7,7 @@
 		<link rel = "stylesheet" type = "text/css" href = "requests.css" />
 	</head>
 	
-	<body>
+	<body class = "removeOnLoad">
 		<div id = "container" class = "flexColumnCenter">
 			<div id = "header" class = "flexRowCenter">
 				<div></div>
@@ -21,6 +21,17 @@
 					
 					<p id = "logoutButton">Logout</p>
 				</div>
+			</div>
+			
+			<div id = "requestFilterContainer" class = "flexRowEnd">
+				<p>Filter: </p>
+				
+				<select id = "requestFilter">
+					<option value = "NONE">None</option>
+					<option value = "PENDING">Pending</option>
+					<option value = "APPROVED">Approved</option>
+					<option value = "DENIED">Denied</option>
+				</select>
 			</div>
 			
 			<div id = "requests" class = "flexColumnCenter">

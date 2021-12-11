@@ -1,16 +1,5 @@
 FRONTEND
-	filter dropdown, None, Pending, Approved, Denied
-		on filter:
-			clear requests children, then:
-			
-			None
-				sort by submitted date most recent at the top, then sort by status, pending or not pending
-			Pending
-				show only pending, sort by submitted date most recent at the top
-			Approved
-				show only approved, sort by submitted date most recent at the top
-			Denied
-				show only approved, sort by submitted date most recent at the top
+	go through fetches and make sure success is true, if not alert(data.message)
 	
 	create request
 		only show if role is EMPLOYEE
@@ -24,24 +13,6 @@ FRONTEND
 			clear request elements (might have to wait for db to update?)
 			get requests again
 	
-	update request
-		approveButton.onclick
-			fetch PUT /api/requests
-				{
-					"id": ...,
-					"approve": true
-				}
-				clear request elements (might have to wait for db to update?)
-				get requests again
-		denyButton.onclick
-			fetch PUT /api/requests
-				{
-					"id": ...,
-					"approve": false
-				}
-				clear request elements (might have to wait for db to update?)
-				get requests again
-	
 	show error messages to user
 
 tests
@@ -50,6 +21,8 @@ selenium automation
 	employee logs in and creates new request
 
 add database table constraints to service layer
+
+create presentation plan
 
 optional stuff
 	add mvn build system

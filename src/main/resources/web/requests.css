@@ -52,9 +52,23 @@
 	background-color: #E61E1E;
 }
 
-#requests {
+#requestFilterContainer {
 	width: 60%;
 	padding: 10px;
+	box-sizing: border-box;
+}
+
+#requestFilterContainer > p {
+	padding: 5px;
+}
+
+#requestFilter {
+	padding: 5px;
+}
+
+#requests {
+	width: 60%;
+	padding: 0 10px 10px;
 	gap: 10px;
 	justify-content: flex-start;
 	box-sizing: border-box;

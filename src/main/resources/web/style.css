@@ -29,7 +29,7 @@ a {
 	text-decoration: none;
 }
 
-input {
+input, button, select {
 	padding: 15px;
 	outline: 0;
 	border: 0;
@@ -38,16 +38,6 @@ input {
 	font-size: 16px;
 	font-family: Arial;
 	box-sizing: border-box;
-}
-
-button {
-	padding: 15px;
-	outline: 0;
-	border: 0;
-	background-color: #333;
-	color: white;
-	font-size: 16px;
-	font-family: Arial;
 }
 
 @media (hover: hover) {
@@ -62,6 +52,10 @@ button {
 	button:active {
 		background: #333;
 	}
+}
+
+.removeOnLoad {
+	transition: none !important;
 }
 
 .flexRowCenter {

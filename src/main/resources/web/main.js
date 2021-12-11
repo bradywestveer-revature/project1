@@ -3,6 +3,8 @@
 const usernameText = document.getElementById ("usernameText");
 const logoutButton = document.getElementById ("logoutButton");
 
+const requestFilter = document.getElementById ("requestFilter");
+
 const requestsElement = document.getElementById ("requests");
 
 const requestTemplate = document.getElementById ("requestTemplate");
@@ -11,8 +13,6 @@ const requestApprovedMessageTemplate = document.getElementById ("requestApproved
 const requestDeniedMessageTemplate = document.getElementById ("requestDeniedMessageTemplate");
 
 let requests = [];
-
-let filterStatus = null;
 
 const formatAmount = amount => {
 	return amount.toLocaleString ("en-US", { style: "currency", currency: "USD" });
@@ -26,8 +26,36 @@ const formatDate = date => {
 	return new Date (date).toLocaleDateString ();
 };
 
+const updateRequest = async (id, approved) => {
+	const response = await fetch ("/api/requests", {
+		method: "PUT",
+		
+		body: JSON.stringify ({
+			id: id,
+			approved: approved
+		})
+	});
+	
+	const data = await response.json ();
+	
+	if (data.success) {
+		clearRequests ();
+		
+		await getRequests ();
+		
+		createRequests ();
+	}
+	
+	else {
+		alert (data.message);
+	}
+};
+
 const createRequest = request => {
 	const requestElement = requestTemplate.content.cloneNode (true).children [0];
+	
+	//id
+	requestElement.id = request.id;
 	
 	//amount
 	requestElement.children [0].children [0].textContent = formatAmount (request.amount);
@@ -46,20 +74,32 @@ const createRequest = request => {
 	
 	if (request.status === "PENDING") {
 		if (sessionStorage.userRole === "MANAGER") {
-			//approve/deny buttons
-			requestElement.children [1].appendChild (requestControlsTemplate.content.cloneNode (true).children [0]);
+			//approve/deny buttonss
+			const requestControls = requestControlsTemplate.content.cloneNode (true).children [0];
+			
+			//approve button
+			requestControls.children [0].addEventListener ("click", () => {
+				updateRequest (parseInt (requestElement.id), true);
+			});
+			
+			//deny button
+			requestControls.children [1].addEventListener ("click", () => {
+				updateRequest (parseInt (requestElement.id), false);
+			});
+			
+			requestElement.children [1].appendChild (requestControls);
 		}
 	}
 	
 	else {
 		//approved/denied status message
-		const requestStatusMessageElement = (request.status === "APPROVED" ? requestApprovedMessageTemplate : requestDeniedMessageTemplate).content.cloneNode (true).children [0];
+		const requestStatusMessage = (request.status === "APPROVED" ? requestApprovedMessageTemplate : requestDeniedMessageTemplate).content.cloneNode (true).children [0];
 		
-		requestStatusMessageElement.children [0].childNodes [1].textContent = " on " + formatDate (request.resolved);
+		requestStatusMessage.children [0].childNodes [1].textContent = " on " + formatDate (request.resolved);
 		
-		requestStatusMessageElement.children [1].textContent = "by " + request.resolver;
+		requestStatusMessage.children [1].textContent = "by " + request.resolver;
 		
-		requestElement.children [1].appendChild (requestStatusMessageElement);
+		requestElement.children [1].appendChild (requestStatusMessage);
 	}
 	
 	return requestElement;
@@ -70,40 +110,80 @@ const clearRequests = () => {
 };
 
 const createRequests = () => {
+	//sort requests
+	requests.sort ((a, b) => {
+		//sort pending above other statuses
+		if (a.status === "PENDING" && b.status !== "PENDING") {
+			return -1;
+		}
+		
+		if (b.status === "PENDING" && a.status !== "PENDING") {
+			return 1;
+		}
+		
+		//sort by resolved (most recent on top)
+		if (new Date (a.resolved) > new Date (b.resolved)) {
+			return -1;
+		}
+		
+		else {
+			return 1;
+		}
+		
+		//sort by submitted (most recent on top)
+		if (new Date (a.submitted) > new Date (b.submitted)) {
+			return -1;
+		}
+		
+		else {
+			return 1;
+		}
+	});
+	
 	for (let i = 0; i < requests.length; i++) {
-		if (filterStatus === null || requests [i].status === filterStatus) {
+		if (requestFilter.value === "NONE" || requests [i].status === requestFilter.value) {
 			requestsElement.appendChild (createRequest (requests [i]));
 		}
 	}
 };
 
-logoutButton.addEventListener ("click", () => {
-	//remove user data from sessionStorage
-	sessionStorage.clear ();
+const getRequests = async () => {
+	const response = await fetch ("/api/requests");
 	
-	fetch ("/api/sessions", {
-		method: "DELETE"
-	}).then (response => {
-		if (response.redirected) {
-			location.href = response.url;
-			
-			return;
-		}
-	});
-});
-
-usernameText.textContent = sessionStorage.username;
-
-fetch ("/api/requests").then (response => {
 	if (response.redirected) {
 		location.href = response.url;
 		
 		return;
 	}
 	
-	return response.json ();
-}).then (data => {
-	requests = data.data;
+	requests = (await response.json ()).data;
+};
+
+(async () => {
+	await getRequests ();
+	
+	createRequests ();
+}) ();
+
+usernameText.textContent = sessionStorage.username;
+
+logoutButton.addEventListener ("click", async () => {
+	//remove user data from sessionStorage
+	sessionStorage.clear ();
+	
+	const response = await fetch ("/api/sessions", {
+		method: "DELETE"
+	});
+	
+	if (response.redirected) {
+		location.href = response.url;
+		
+		return;
+	}
+});
+
+requestFilter.addEventListener ("change", () => {
+	clearRequests ();
 	
 	createRequests ();
 });
