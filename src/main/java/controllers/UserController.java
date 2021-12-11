@@ -6,6 +6,7 @@ import exceptions.InvalidBodyException;
 import exceptions.InvalidPasswordException;
 import exceptions.UnauthorizedException;
 import io.javalin.http.Context;
+import jsonmodels.UserResponse;
 import models.User;
 import jsonmodels.JsonResponse;
 import services.UserService;
@@ -29,9 +30,7 @@ public class UserController {
 		
 		context.sessionAttribute ("user", user);
 		
-		context.json (new JsonResponse ("Logged in", true));
-		
-		context.redirect ("/");
+		context.json (new JsonResponse ("Logged in", true, new UserResponse (user.getUsername (), user.getRole ().name ())));
 	}
 	
 	public static void logOutUser (Context context) throws UnauthorizedException {
@@ -42,5 +41,7 @@ public class UserController {
 		context.sessionAttribute ("user", null);
 		
 		context.json (new JsonResponse ("Logged out", true));
+		
+		context.redirect ("/login");
 	}
 }

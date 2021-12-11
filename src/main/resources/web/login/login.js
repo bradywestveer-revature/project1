@@ -12,10 +12,11 @@ const login = () => {
 			username: usernameInput.value,
 			password: passwordInput.value
 		})
-	}).then (response => {
-		if (response.redirected) {
-			location.href = response.url;
-		}
+	}).then (response => response.json ()).then (data => {
+		sessionStorage.username = data.data.username;
+		sessionStorage.userRole = data.data.role;
+		
+		location.href = "/";
 	});
 };
 

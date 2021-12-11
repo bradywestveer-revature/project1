@@ -56,7 +56,7 @@ public class RequestController {
 		//get requests based on user role
 		List <RequestResponse> requests = user.getRole () == UserRole.MANAGER ? requestService.getRequests () : requestService.getRequests (user.getId ());
 		
-		context.json (new JsonResponse ("Got " + requests.size () + " requests", true, new RequestsResponse (user.getRole ().name (), requests)));
+		context.json (new JsonResponse ("Got " + requests.size () + " requests", true, requests));
 	}
 	
 	public static void updateRequest (Context context) throws InvalidBodyException, UnauthorizedException, SQLException, NotFoundException {

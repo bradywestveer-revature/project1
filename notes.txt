@@ -1,7 +1,5 @@
 FRONTEND
 	filter dropdown, None, Pending, Approved, Denied
-		store request results in local array
-		
 		on filter:
 			clear requests children, then:
 			
@@ -13,8 +11,6 @@ FRONTEND
 				show only approved, sort by submitted date most recent at the top
 			Denied
 				show only approved, sort by submitted date most recent at the top
-	
-	logged in as "username", logout button all top right
 	
 	create request
 		only show if role is EMPLOYEE
@@ -69,3 +65,5 @@ extra stuff
 //todos
 
 intellij cleanup code
+
+don't send context.json after context.redirect? doesn't do anything?

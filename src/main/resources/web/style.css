@@ -124,9 +124,13 @@ button {
 	background-color: #111;
 }
 
-#header > a {
+#header > div {
+	width: calc(100% / 3);
 	height: 100%;
-	box-sizing: border-box;
+}
+
+#logoutButton:hover {
+	cursor: pointer;
 }
 
 #container {

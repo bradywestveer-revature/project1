@@ -1,13 +1,18 @@
 "use strict";
 
-const requests = document.getElementById ("requests");
+const usernameText = document.getElementById ("usernameText");
+const logoutButton = document.getElementById ("logoutButton");
+
+const requestsElement = document.getElementById ("requests");
 
 const requestTemplate = document.getElementById ("requestTemplate");
 const requestControlsTemplate = document.getElementById ("requestControlsTemplate");
 const requestApprovedMessageTemplate = document.getElementById ("requestApprovedMessageTemplate");
 const requestDeniedMessageTemplate = document.getElementById ("requestDeniedMessageTemplate");
 
-let userRole;
+let requests = [];
+
+let filterStatus = null;
 
 const formatAmount = amount => {
 	return amount.toLocaleString ("en-US", { style: "currency", currency: "USD" });
@@ -40,7 +45,7 @@ const createRequest = request => {
 	requestElement.children [1].children [0].children [1].textContent = "by " + request.author;
 	
 	if (request.status === "PENDING") {
-		if (userRole === "MANAGER") {
+		if (sessionStorage.userRole === "MANAGER") {
 			//approve/deny buttons
 			requestElement.children [1].appendChild (requestControlsTemplate.content.cloneNode (true).children [0]);
 		}
@@ -60,6 +65,35 @@ const createRequest = request => {
 	return requestElement;
 };
 
+const clearRequests = () => {
+	requestsElement.replaceChildren ();
+};
+
+const createRequests = () => {
+	for (let i = 0; i < requests.length; i++) {
+		if (filterStatus === null || requests [i].status === filterStatus) {
+			requestsElement.appendChild (createRequest (requests [i]));
+		}
+	}
+};
+
+logoutButton.addEventListener ("click", () => {
+	//remove user data from sessionStorage
+	sessionStorage.clear ();
+	
+	fetch ("/api/sessions", {
+		method: "DELETE"
+	}).then (response => {
+		if (response.redirected) {
+			location.href = response.url;
+			
+			return;
+		}
+	});
+});
+
+usernameText.textContent = sessionStorage.username;
+
 fetch ("/api/requests").then (response => {
 	if (response.redirected) {
 		location.href = response.url;
@@ -69,12 +103,7 @@ fetch ("/api/requests").then (response => {
 	
 	return response.json ();
 }).then (data => {
-	userRole = data.data.userRole;
+	requests = data.data;
 	
-	for (let i = 0; i < data.data.requests.length; i++) {
-		requests.appendChild (createRequest (data.data.requests [i]));
-	}
-	
-	//todo remove
-	console.log (data);
+	createRequests ();
 });
