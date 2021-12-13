@@ -30,7 +30,7 @@ public class UserController {
 		
 		context.sessionAttribute ("user", user);
 		
-		context.json (new JsonResponse ("Logged in", true, new UserResponse (user.getUsername (), user.getRole ().name ())));
+		context.json (new JsonResponse ("Logged in", true, new UserResponse (user.getUsername (), user.getRole ().name ()), "/"));
 	}
 	
 	public static void logOutUser (Context context) throws UnauthorizedException {
@@ -40,8 +40,6 @@ public class UserController {
 		
 		context.sessionAttribute ("user", null);
 		
-		context.json (new JsonResponse ("Logged out", true));
-		
-		context.redirect ("/login");
+		context.json (new JsonResponse ("Logged out", true, null, "/login"));
 	}
 }

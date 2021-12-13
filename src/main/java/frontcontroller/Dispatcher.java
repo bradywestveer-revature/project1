@@ -57,9 +57,7 @@ public class Dispatcher {
 			else if (exception.getClass () == UnauthorizedException.class) {
 				context.status (401);
 				
-				context.json (new JsonResponse ("Error! Unauthorized", false));
-				
-				context.redirect ("/login");
+				context.json (new JsonResponse ("Error! Unauthorized", false, null, "/login"));
 			}
 			
 			else if (exception.getClass () == SQLException.class) {

@@ -1,6 +1,4 @@
 FRONTEND
-	go through fetches and make sure success is true, if not alert(data.message)
-	
 	create request
 		only show if role is EMPLOYEE
 		inputs for amount, type, and description in that order, and submit button
@@ -12,8 +10,6 @@ FRONTEND
 				}
 			clear request elements (might have to wait for db to update?)
 			get requests again
-	
-	show error messages to user
 
 tests
 
@@ -34,9 +30,9 @@ optional stuff
 	pagination?
 
 extra stuff
+	create/read/update/delete users as manager
+	delete requests
 
 //todos
 
 intellij cleanup code
-
-don't send context.json after context.redirect? doesn't do anything?

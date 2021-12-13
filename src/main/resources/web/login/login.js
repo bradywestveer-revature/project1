@@ -5,27 +5,17 @@ const passwordInput = document.getElementById ("passwordInput");
 const loginButton = document.getElementById ("loginButton");
 
 const login = async () => {
-	const response = await fetch ("/api/sessions", {
+	await handleResponse (await fetch ("/api/sessions", {
 		method: "POST",
 		
 		body: JSON.stringify ({
 			username: usernameInput.value,
 			password: passwordInput.value
 		})
-	});
-	
-	const data = await response.json ();
-	
-	if (data.success) {
+	}), data => {
 		sessionStorage.username = data.data.username;
 		sessionStorage.userRole = data.data.role;
-		
-		location.href = "/";
-	}
-	
-	else {
-		alert (data.message);
-	}
+	});
 };
 
 const loginKeyDown = event => {
