@@ -23,10 +23,25 @@
 				</div>
 			</div>
 			
-			<div id = "requestFilterContainer" class = "flexRowEnd">
-				<p>Filter: </p>
+			<div id = "requestsControlsContainer" class = "flexRowEnd">
+				<div id = "requestsCreate" class = "flexRowStart" style = "display: none;">
+					<input id = "requestsCreateAmount" class = "requestsControl" placeholder = "$" />
+					
+					<select id = "requestsCreateType" class = "requestsControl">
+						<option value = "LODGING">Lodging</option>
+						<option value = "TRAVEL">Travel</option>
+						<option value = "FOOD">Food</option>
+						<option value = "OTHER">Other</option>
+					</select>
+					
+					<input id = "requestsCreateDescription" class = "requestsControl" placeholder = "Description..." />
+					
+					<button id = "requestsCreateSubmitButton" class = "requestsControl" >Submit Request</button>
+				</div>
 				
-				<select id = "requestFilter">
+				<p class = "requestsControl">Filter: </p>
+				
+				<select id = "requestsFilter" class = "requestsControl">
 					<option value = "NONE">None</option>
 					<option value = "PENDING">Pending</option>
 					<option value = "APPROVED">Approved</option>

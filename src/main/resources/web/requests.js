@@ -3,7 +3,14 @@
 const usernameText = document.getElementById ("usernameText");
 const logoutButton = document.getElementById ("logoutButton");
 
-const requestFilter = document.getElementById ("requestFilter");
+const requestsCreate = document.getElementById ("requestsCreate");
+
+const requestsCreateAmount = document.getElementById ("requestsCreateAmount");
+const requestsCreateType = document.getElementById ("requestsCreateType");
+const requestsCreateDescription = document.getElementById ("requestsCreateDescription");
+const requestsCreateSubmitButton = document.getElementById ("requestsCreateSubmitButton");
+
+const requestsFilter = document.getElementById ("requestsFilter");
 
 const requestsElement = document.getElementById ("requests");
 
@@ -65,7 +72,7 @@ const createRequest = request => {
 	requestElement.children [1].children [0].children [1].textContent = "by " + request.author;
 	
 	if (request.status === "PENDING") {
-		if (sessionStorage.userRole === "MANAGER") {
+		if (localStorage.userRole === "MANAGER") {
 			//approve/deny buttonss
 			const requestControls = requestControlsTemplate.content.cloneNode (true).children [0];
 			
@@ -124,7 +131,7 @@ const createRequests = () => {
 	});
 	
 	for (let i = 0; i < requests.length; i++) {
-		if (requestFilter.value === "NONE" || requests [i].status === requestFilter.value) {
+		if (requestsFilter.value === "NONE" || requests [i].status === requestsFilter.value) {
 			requestsElement.appendChild (createRequest (requests [i]));
 		}
 	}
@@ -142,18 +149,50 @@ const getRequests = async () => {
 	createRequests ();
 }) ();
 
-usernameText.textContent = sessionStorage.username;
+usernameText.textContent = localStorage.username;
 
 logoutButton.addEventListener ("click", async () => {
-	//remove user data from sessionStorage
-	sessionStorage.clear ();
+	//remove user data from localStorage
+	localStorage.clear ();
 	
 	handleResponse (await fetch ("/api/sessions", {
 		method: "DELETE"
 	}));
 });
 
-requestFilter.addEventListener ("change", () => {
+if (localStorage.userRole === "EMPLOYEE") {
+	requestsCreate.style.display = "";
+	
+	requestsCreateSubmitButton.addEventListener ("click", async () => {
+		if (isNaN (parseFloat (requestsCreateAmount.value))) {
+			alert ("Error! Invalid amount");
+			
+			return;
+		}
+		
+		handleResponse (await fetch ("/api/requests", {
+			method: "POST",
+			
+			body: JSON.stringify ({
+				amount: requestsCreateAmount.value,
+				type: requestsCreateType.value,
+				description: requestsCreateDescription.value
+			})
+		}), async data => {
+			clearRequests ();
+			
+			await getRequests ();
+			
+			createRequests ();
+			
+			requestsCreateAmount.value = "";
+			requestsCreateType.selectedIndex = 0;
+			requestsCreateDescription.value = "";
+		});
+	});
+}
+
+requestsFilter.addEventListener ("change", () => {
 	clearRequests ();
 	
 	createRequests ();

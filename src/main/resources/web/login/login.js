@@ -13,8 +13,8 @@ const login = async () => {
 			password: passwordInput.value
 		})
 	}), data => {
-		sessionStorage.username = data.data.username;
-		sessionStorage.userRole = data.data.role;
+		localStorage.username = data.data.username;
+		localStorage.userRole = data.data.role;
 	});
 };
 

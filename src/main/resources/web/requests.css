@@ -52,18 +52,25 @@
 	background-color: #E61E1E;
 }
 
-#requestFilterContainer {
-	width: 60%;
-	padding: 10px;
+.requestsControl {
+	height: 100%;
+	padding: 5px;
 	box-sizing: border-box;
 }
 
-#requestFilterContainer > p {
-	padding: 5px;
+#requestsControlsContainer {
+	width: 60%;
+	padding: 10px;
+	gap: 5px;
+	box-sizing: border-box;
 }
 
-#requestFilter {
-	padding: 5px;
+#requestsCreate {
+	flex-grow: 1;
+}
+
+#requestsCreateAmount {
+	width: 15%;
 }
 
 #requests {

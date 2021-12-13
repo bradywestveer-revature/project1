@@ -1,17 +1,8 @@
-FRONTEND
-	create request
-		only show if role is EMPLOYEE
-		inputs for amount, type, and description in that order, and submit button
-			onclick, fetch POST /api/requests
-				{
-					"type": ...
-					"amount": ...
-					"description": ...
-				}
-			clear request elements (might have to wait for db to update?)
-			get requests again
-
 tests
+	UserServiceTest
+	RequestServiceTest
+	UserDaoImplementationIT
+	RequestDaoImplementationIT
 
 selenium automation
 	employee logs in and creates new request
@@ -32,6 +23,9 @@ optional stuff
 extra stuff
 	create/read/update/delete users as manager
 	delete requests
+	fix <select> styling
+	make getting requests faster somehow
+		or add loading indicator
 
 //todos
 
