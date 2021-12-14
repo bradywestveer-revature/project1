@@ -8,7 +8,6 @@ import exceptions.NotFoundException;
 import jsonmodels.RequestResponse;
 import models.Request;
 import models.RequestType;
-import models.User;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class RequestService {
 		requestDao.createRequest (amount, description, authorId, type);
 	}
 	
-	public List <RequestResponse> getRequestResponses (List <Request> requests) throws SQLException, NotFoundException {
+	public List <RequestResponse> getRequestResponses (List <Request> requests) throws SQLException {
 		List <RequestResponse> requestResponses = new ArrayList <> ();
 		
 		HashMap <Integer, String> userNames = userDao.getUserNames ();

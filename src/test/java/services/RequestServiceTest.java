@@ -116,12 +116,7 @@ class RequestServiceTest {
 		Request request2 = new Request (2, 1.0F, "submitted2", "resolved2", "test", 2, 5, RequestStatus.APPROVED, RequestType.FOOD);
 		Request request3 = new Request (3, 1.0F, "submitted3", "resolved3", "test", 3, 6, RequestStatus.DENIED, RequestType.TRAVEL);
 		
-		List <Request> requests = new ArrayList <> ();
 		List <Request> authorRequests = new ArrayList <> ();
-		
-		requests.add (request1);
-		requests.add (request2);
-		requests.add (request3);
 		
 		authorRequests.add (request1);
 		
@@ -134,14 +129,9 @@ class RequestServiceTest {
 		userNames.put (5, "User 5");
 		userNames.put (6, "User 6");
 		
-		List <RequestResponse> requestResponses = new ArrayList <> ();
 		List <RequestResponse> authorRequestResponses = new ArrayList <> ();
 		
 		RequestResponse requestResponse1 = new RequestResponse (request1.getId (), request1.getAmount (), request1.getSubmitted (), request1.getResolved (), request1.getDescription (), userNames.get (1), userNames.get (4), request1.getStatus (), request1.getType ());
-		
-		requestResponses.add (requestResponse1);
-		requestResponses.add (new RequestResponse (request2.getId (), request2.getAmount (), request2.getSubmitted (), request2.getResolved (), request2.getDescription (), userNames.get (2), userNames.get (5), request2.getStatus (), request2.getType ()));
-		requestResponses.add (new RequestResponse (request3.getId (), request3.getAmount (), request3.getSubmitted (), request3.getResolved (), request3.getDescription (), userNames.get (3), userNames.get (6), request3.getStatus (), request3.getType ()));
 		
 		authorRequestResponses.add (requestResponse1);
 		

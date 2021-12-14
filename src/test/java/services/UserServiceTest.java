@@ -33,10 +33,10 @@ class UserServiceTest {
 	}
 	
 	@Test
-	void logInUserWhenInvalidPassword () throws SQLException, UnauthorizedException, InvalidPasswordException, NotFoundException {
+	void logInUserWhenInvalidPassword () throws SQLException, NotFoundException {
 		String username = "username";
 		String password = "password";
-		String invalidPassword = "passworda";
+		String invalidPassword = "invalid";
 		
 		User expectedResult = new User ();
 		
@@ -45,8 +45,6 @@ class UserServiceTest {
 		
 		Mockito.when (userDao.getUser (username)).thenReturn (expectedResult);
 		
-		assertThrows (InvalidPasswordException.class, () -> {
-			userService.logInUser (username, invalidPassword);
-		});
+		assertThrows (InvalidPasswordException.class, () -> userService.logInUser (username, invalidPassword));
 	}
 }

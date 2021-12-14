@@ -5,12 +5,10 @@ import models.Request;
 import models.RequestStatus;
 import models.RequestType;
 import org.junit.jupiter.api.*;
-import org.mockito.internal.matchers.Not;
 import utilities.DatabaseCredentials;
 import utilities.H2Utilities;
 
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +16,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RequestDaoIT {
-	private final UserDao userDao = new UserDaoImplementation (DatabaseCredentials.H2Url, DatabaseCredentials.H2Username, DatabaseCredentials.H2Password);
 	private final RequestDao requestDao = new RequestDaoImplementation (DatabaseCredentials.H2Url, DatabaseCredentials.H2Username, DatabaseCredentials.H2Password);
 	
 	@BeforeAll
@@ -57,7 +54,7 @@ class RequestDaoIT {
 	}
 	
 	@Test
-	void getRequests () throws SQLException, ParseException {
+	void getRequests () throws SQLException {
 		List <Request> requests = new ArrayList <> ();
 		
 		Request request1 = new Request (1, 1.0F, null, null, "test", 2, 0, RequestStatus.PENDING, RequestType.LODGING);
@@ -129,9 +126,7 @@ class RequestDaoIT {
 	}
 	
 	@Test
-	void updateRequestWhenInvalidId () throws SQLException, NotFoundException {
-		assertThrows (NotFoundException.class, () -> {
-			requestDao.updateRequest (1, 1, true);
-		});
+	void updateRequestWhenInvalidId () {
+		assertThrows (NotFoundException.class, () -> requestDao.updateRequest (1, 1, true));
 	}
 }

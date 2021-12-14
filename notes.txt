@@ -1,16 +1,15 @@
-tests
-	UserDaoImplementationIT
-
 selenium automation
 	employee logs in and creates new request
 
 add database table constraints to service layer
+add check that amount is above 0
+
+add mvn build system
+deploy to ec2
 
 create presentation plan
 
 optional stuff
-	add mvn build system
-	deploy to ec2
 	hash passwords
 	allow receipts
 	email notifications

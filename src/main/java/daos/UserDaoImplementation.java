@@ -1,6 +1,5 @@
 package daos;
 
-import exceptions.InvalidPasswordException;
 import exceptions.NotFoundException;
 import models.*;
 import utilities.DatabaseCredentials;
@@ -66,7 +65,7 @@ public class UserDaoImplementation implements UserDao {
 	}
 	
 	@Override
-	public User getUser (String username) throws SQLException, InvalidPasswordException, NotFoundException {
+	public User getUser (String username) throws SQLException, NotFoundException {
 		try (Connection connection = DriverManager.getConnection (this.url, this.username, this.password)) {
 			PreparedStatement statement = connection.prepareStatement ("SELECT * FROM ERS_USERS WHERE ERS_USERNAME = ?;");
 			

@@ -15,6 +15,7 @@ import io.javalin.Javalin;
 
 import org.apache.log4j.Logger;
 import jsonmodels.JsonResponse;
+import org.postgresql.util.PSQLException;
 
 import java.sql.SQLException;
 
@@ -60,7 +61,7 @@ public class Dispatcher {
 				context.json (new JsonResponse ("Error! Unauthorized", false, null, "/login"));
 			}
 			
-			else if (exception.getClass () == SQLException.class) {
+			else if (exception.getClass () == SQLException.class || exception.getClass () == PSQLException.class) {
 				context.status (500);
 				
 				context.json (new JsonResponse ("Error! SQL error", false));

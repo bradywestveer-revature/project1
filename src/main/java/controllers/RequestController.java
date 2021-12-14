@@ -5,7 +5,6 @@ import exceptions.InvalidBodyException;
 import exceptions.NotFoundException;
 import exceptions.UnauthorizedException;
 import io.javalin.http.Context;
-import models.Request;
 import models.RequestType;
 import models.User;
 import models.UserRole;

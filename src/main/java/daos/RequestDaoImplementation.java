@@ -1,6 +1,5 @@
 package daos;
 
-import exceptions.InvalidBodyException;
 import exceptions.NotFoundException;
 import models.Request;
 import models.RequestStatus;

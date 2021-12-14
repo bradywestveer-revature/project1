@@ -73,7 +73,7 @@ const createRequest = request => {
 	
 	if (request.status === "PENDING") {
 		if (localStorage.userRole === "MANAGER") {
-			//approve/deny buttonss
+			//approve/deny buttons
 			const requestControls = requestControlsTemplate.content.cloneNode (true).children [0];
 			
 			//approve button
