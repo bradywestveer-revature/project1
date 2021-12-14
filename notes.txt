@@ -1,6 +1,5 @@
 tests
 	UserDaoImplementationIT
-	RequestDaoImplementationIT
 
 selenium automation
 	employee logs in and creates new request
@@ -16,7 +15,6 @@ optional stuff
 	allow receipts
 	email notifications
 	selenium testing
-	pagination?
 
 extra stuff
 	create/read/update/delete users as manager
