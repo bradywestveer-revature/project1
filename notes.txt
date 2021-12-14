@@ -1,6 +1,4 @@
 tests
-	UserServiceTest
-	RequestServiceTest
 	UserDaoImplementationIT
 	RequestDaoImplementationIT
 
@@ -30,3 +28,5 @@ extra stuff
 //todos
 
 intellij cleanup code
+
+replace .thenCallRealMethod calls in tests with spies

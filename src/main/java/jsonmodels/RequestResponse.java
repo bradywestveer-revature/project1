@@ -3,6 +3,8 @@ package jsonmodels;
 import models.RequestStatus;
 import models.RequestType;
 
+import java.util.Objects;
+
 public class RequestResponse {
 	private int id;
 	private float amount;
@@ -62,5 +64,13 @@ public class RequestResponse {
 	
 	public RequestType getType () {
 		return type;
+	}
+	
+	@Override
+	public boolean equals (Object o) {
+		if (this == o) return true;
+		if (o == null || getClass () != o.getClass ()) return false;
+		RequestResponse that = (RequestResponse) o;
+		return id == that.id && Float.compare (that.amount, amount) == 0 && Objects.equals (submitted, that.submitted) && Objects.equals (resolved, that.resolved) && Objects.equals (description, that.description) && Objects.equals (author, that.author) && Objects.equals (resolver, that.resolver) && status == that.status && type == that.type;
 	}
 }

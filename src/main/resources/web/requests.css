@@ -32,6 +32,10 @@
 	max-width: 50%;
 }
 
+.requestDescription:empty {
+	display: none;
+}
+
 .requestApprovedText {
 	color: #00C864;
 }
