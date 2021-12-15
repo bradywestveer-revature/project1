@@ -1,5 +1,6 @@
 package services;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import daos.UserDao;
 import daos.UserDaoImplementation;
 import exceptions.InvalidPasswordException;
@@ -25,7 +26,7 @@ class UserServiceTest {
 		User expectedResult = new User ();
 		
 		expectedResult.setUsername (username);
-		expectedResult.setPassword (password);
+		expectedResult.setPassword (BCrypt.withDefaults ().hashToString (12, password.toCharArray ()));
 		
 		Mockito.when (userDao.getUser (username)).thenReturn (expectedResult);
 		
@@ -41,7 +42,7 @@ class UserServiceTest {
 		User expectedResult = new User ();
 		
 		expectedResult.setUsername (username);
-		expectedResult.setPassword (password);
+		expectedResult.setPassword (BCrypt.withDefaults ().hashToString (12, password.toCharArray ()));
 		
 		Mockito.when (userDao.getUser (username)).thenReturn (expectedResult);
 		

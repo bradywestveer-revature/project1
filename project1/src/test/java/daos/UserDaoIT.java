@@ -22,10 +22,10 @@ class UserDaoIT {
 	public UserDaoIT () {
 		//populate users list for testing the database
 		//these should be the same as the users added in H2Utilities.createUsersTable ();
-		users.add (new User (1, "manager1", "adm1n", "Manager", "One", "managerone@gmail.com", UserRole.MANAGER));
-		users.add (new User (2, "employee1", "p4ssw0rd", "Employee", "One", "employeeone@gmail.com", UserRole.EMPLOYEE));
-		users.add (new User (3, "employee2", "p4ssw0rd", "Employee", "Two", "employeetwo@gmail.com", UserRole.EMPLOYEE));
-		users.add (new User (4, "employee3", "p4ssw0rd", "Employee", "Three", "employeethree@gmail.com", UserRole.EMPLOYEE));
+		users.add (new User (1, "manager1", "$2a$12$t3usDyOnl7oQtYOABIyhc.Cz.BxVFD7gWvcIDbeFgw8jd2vYw4dDS", "Manager", "One", "managerone@gmail.com", UserRole.MANAGER));
+		users.add (new User (2, "employee1", "$2a$12$qxW7yx45Zb8OMpQTCWGfmuf8VnIxtO3mRAS9ozJpyAfWDJNg0jjbS", "Employee", "One", "employeeone@gmail.com", UserRole.EMPLOYEE));
+		users.add (new User (3, "employee2", "$2a$12$qxW7yx45Zb8OMpQTCWGfmuf8VnIxtO3mRAS9ozJpyAfWDJNg0jjbS", "Employee", "Two", "employeetwo@gmail.com", UserRole.EMPLOYEE));
+		users.add (new User (4, "employee3", "$2a$12$qxW7yx45Zb8OMpQTCWGfmuf8VnIxtO3mRAS9ozJpyAfWDJNg0jjbS", "Employee", "Three", "employeethree@gmail.com", UserRole.EMPLOYEE));
 	}
 	
 	@BeforeAll

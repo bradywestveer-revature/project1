@@ -23,7 +23,7 @@ public class Main {
 		WebElement loginButton = driver.findElement (By.id ("loginButton"));
 		
 		usernameInput.sendKeys ("employee1");
-		passwordInput.sendKeys ("p4ssw0rd");
+		passwordInput.sendKeys ("password");
 		
 		loginButton.click ();
 		

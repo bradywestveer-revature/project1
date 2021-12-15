@@ -1,5 +1,6 @@
 package services;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import daos.UserDao;
 import daos.UserDaoImplementation;
 import exceptions.InvalidPasswordException;
@@ -22,7 +23,7 @@ public class UserService {
 	public User logInUser (String username, String password) throws InvalidPasswordException, SQLException, NotFoundException {
 		User user = userDao.getUser (username);
 		
-		if (user == null || !user.getPassword ().equals (password)) {
+		if (!BCrypt.verifyer ().verify (password.toCharArray (), user.getPassword ()).verified) {
 			throw new InvalidPasswordException ();
 		}
 		
