@@ -1,4 +1,3 @@
-add mvn build system
 deploy to ec2
 allow receipts
 create presentation plan
