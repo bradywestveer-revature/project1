@@ -39,7 +39,7 @@ class RequestServiceTest {
 	}
 	
 	@Test
-	void getRequestResponses () throws SQLException, NotFoundException {
+	void getRequestResponses () throws SQLException {
 		Request request1 = new Request (1, 1.0F, "submitted1", "resolved1", "test", 1, 4, RequestStatus.PENDING, RequestType.LODGING);
 		Request request2 = new Request (2, 1.0F, "submitted2", "resolved2", "test", 2, 5, RequestStatus.APPROVED, RequestType.FOOD);
 		Request request3 = new Request (3, 1.0F, "submitted3", "resolved3", "test", 3, 6, RequestStatus.DENIED, RequestType.TRAVEL);

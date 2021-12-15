@@ -9,7 +9,6 @@ import utilities.DatabaseCredentials;
 import utilities.H2Utilities;
 
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 

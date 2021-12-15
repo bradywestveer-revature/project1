@@ -20,7 +20,7 @@ public class UserService {
 		this.userDao = userDao;
 	}
 	
-	public User logInUser (String username, String password) throws InvalidPasswordException, SQLException, UnauthorizedException, NotFoundException {
+	public User logInUser (String username, String password) throws InvalidPasswordException, SQLException, NotFoundException {
 		User user = userDao.getUser (username);
 		
 		if (user == null || !user.getPassword ().equals (password)) {

@@ -44,11 +44,11 @@ public class RequestService {
 		return requestResponses;
 	}
 	
-	public List <RequestResponse> getRequests () throws SQLException, NotFoundException {
+	public List <RequestResponse> getRequests () throws SQLException {
 		return getRequestResponses (requestDao.getRequests ());
 	}
 	
-	public List <RequestResponse> getRequests (Integer authorId) throws SQLException, NotFoundException {
+	public List <RequestResponse> getRequests (Integer authorId) throws SQLException {
 		return getRequestResponses (requestDao.getRequests (authorId));
 	}
 	

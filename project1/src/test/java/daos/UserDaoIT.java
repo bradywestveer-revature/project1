@@ -1,7 +1,6 @@
 package daos;
 
 import exceptions.NotFoundException;
-import exceptions.UnauthorizedException;
 import models.User;
 import models.UserRole;
 import org.junit.jupiter.api.*;

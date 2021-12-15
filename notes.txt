@@ -1,6 +1,3 @@
-selenium automation
-	employee logs in and creates new request
-
 add database table constraints to service layer
 add check that amount is above 0
 
