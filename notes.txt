@@ -1,23 +1,16 @@
 add mvn build system
 deploy to ec2
-
+allow receipts
 create presentation plan
-
-optional stuff
-	hash passwords
-	allow receipts
-	email notifications
-	selenium testing
-
-extra stuff
-	create/read/update/delete users as manager
-	delete requests
-	fix <select> styling
-	make getting requests faster somehow
-		or add loading indicator
-
-//todos
 
 intellij cleanup code
 
+fix amount rounding problems
+delete requests
+create/read/update/delete users as manager
+fix <select> styling
+make getting requests faster somehow
+	or add loading indicator
+email notifications
+selenium testing
 replace .thenCallRealMethod calls in tests with spies
