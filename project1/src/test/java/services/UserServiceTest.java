@@ -18,7 +18,7 @@ class UserServiceTest {
 	private final UserService userService = new UserService (userDao);
 	
 	@Test
-	void logInUser () throws SQLException, UnauthorizedException, InvalidPasswordException, NotFoundException {
+	void logInUser () throws SQLException, InvalidPasswordException, NotFoundException {
 		String username = "username";
 		String password = "password";
 		

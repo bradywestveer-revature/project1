@@ -4,6 +4,7 @@ import daos.RequestDao;
 import daos.RequestDaoImplementation;
 import daos.UserDao;
 import daos.UserDaoImplementation;
+import exceptions.InvalidValueException;
 import exceptions.NotFoundException;
 import jsonmodels.RequestResponse;
 import models.Request;
@@ -28,7 +29,15 @@ public class RequestService {
 		this.userDao = userDao;
 	}
 	
-	public void createRequest (Float amount, String description, Integer authorId, RequestType type) throws SQLException {
+	public void createRequest (Float amount, String description, Integer authorId, RequestType type) throws SQLException, InvalidValueException {
+		if (amount < 0.01F) {
+			throw new InvalidValueException ("Error! Amount must be at least 0.01");
+		}
+		
+		if (description.length () > 250) {
+			throw new InvalidValueException ("Error! Description is too long");
+		}
+		
 		requestDao.createRequest (amount, description, authorId, type);
 	}
 	

@@ -4,6 +4,7 @@ import daos.RequestDao;
 import daos.RequestDaoImplementation;
 import daos.UserDao;
 import daos.UserDaoImplementation;
+import exceptions.InvalidValueException;
 import exceptions.NotFoundException;
 import jsonmodels.RequestResponse;
 import models.Request;
@@ -25,7 +26,7 @@ class RequestServiceTest {
 	private final RequestService requestService = Mockito.mock (RequestService.class, Mockito.withSettings ().useConstructor (requestDao, userDao));
 	
 	@Test
-	void createRequest () throws SQLException {
+	void createRequest () throws SQLException, InvalidValueException {
 		float amount = 1.0F;
 		String description = "test";
 		int authorId = 1;
@@ -36,6 +37,35 @@ class RequestServiceTest {
 		requestService.createRequest (amount, description, authorId, type);
 		
 		Mockito.verify (requestDao).createRequest (amount, description, authorId, type);
+	}
+	
+	@Test
+	void createRequestWhenInvalidAmount () throws InvalidValueException, SQLException {
+		//< 0.01
+		float amount = 0.009F;
+		
+		String description = "test";
+		int authorId = 1;
+		RequestType type = RequestType.LODGING;
+		
+		Mockito.doCallRealMethod ().when (requestService).createRequest (amount, description, authorId, type);
+		
+		assertThrows (InvalidValueException.class, () -> requestService.createRequest (amount, description, authorId, type));
+	}
+	
+	@Test
+	void createRequestWhenInvalidDescription () throws InvalidValueException, SQLException {
+		float amount = 1.0F;
+		
+		//251 characters
+		String description = "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901";
+		
+		int authorId = 1;
+		RequestType type = RequestType.LODGING;
+		
+		Mockito.doCallRealMethod ().when (requestService).createRequest (amount, description, authorId, type);
+		
+		assertThrows (InvalidValueException.class, () -> requestService.createRequest (amount, description, authorId, type));
 	}
 	
 	@Test
@@ -73,7 +103,7 @@ class RequestServiceTest {
 	}
 	
 	@Test
-	void getRequests () throws SQLException, NotFoundException {
+	void getRequests () throws SQLException {
 		Request request1 = new Request (1, 1.0F, "submitted1", "resolved1", "test", 1, 4, RequestStatus.PENDING, RequestType.LODGING);
 		Request request2 = new Request (2, 1.0F, "submitted2", "resolved2", "test", 2, 5, RequestStatus.APPROVED, RequestType.FOOD);
 		Request request3 = new Request (3, 1.0F, "submitted3", "resolved3", "test", 3, 6, RequestStatus.DENIED, RequestType.TRAVEL);
@@ -109,7 +139,7 @@ class RequestServiceTest {
 	}
 	
 	@Test
-	void getRequestsWithId () throws SQLException, NotFoundException {
+	void getRequestsWithId () throws SQLException {
 		int authorId = 1;
 		
 		Request request1 = new Request (1, 1.0F, "submitted1", "resolved1", "test", 1, 4, RequestStatus.PENDING, RequestType.LODGING);

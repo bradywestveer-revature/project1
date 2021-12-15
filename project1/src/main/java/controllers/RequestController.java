@@ -1,5 +1,6 @@
 package controllers;
 
+import exceptions.InvalidValueException;
 import jsonmodels.*;
 import exceptions.InvalidBodyException;
 import exceptions.NotFoundException;
@@ -16,7 +17,7 @@ import java.util.List;
 public class RequestController {
 	private static final RequestService requestService = new RequestService ();
 	
-	public static void createRequest (Context context) throws InvalidBodyException, UnauthorizedException, SQLException {
+	public static void createRequest (Context context) throws InvalidBodyException, UnauthorizedException, SQLException, InvalidValueException {
 		CreateRequestBody body = context.bodyAsClass (CreateRequestBody.class);
 		
 		Float amount = body.getAmount ();
@@ -44,7 +45,7 @@ public class RequestController {
 		context.json (new JsonResponse ("Created request", true));
 	}
 	
-	public static void getRequests (Context context) throws UnauthorizedException, SQLException, NotFoundException {
+	public static void getRequests (Context context) throws UnauthorizedException, SQLException {
 		User user = context.sessionAttribute ("user");
 		
 		//if user is not logged in

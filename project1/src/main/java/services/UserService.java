@@ -4,7 +4,6 @@ import daos.UserDao;
 import daos.UserDaoImplementation;
 import exceptions.InvalidPasswordException;
 import exceptions.NotFoundException;
-import exceptions.UnauthorizedException;
 import models.User;
 
 import java.sql.SQLException;

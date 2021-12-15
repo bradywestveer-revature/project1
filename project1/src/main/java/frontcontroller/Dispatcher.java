@@ -7,10 +7,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import controllers.RequestController;
 import controllers.UserController;
-import exceptions.InvalidBodyException;
-import exceptions.InvalidPasswordException;
-import exceptions.NotFoundException;
-import exceptions.UnauthorizedException;
+import exceptions.*;
 import io.javalin.Javalin;
 
 import org.apache.log4j.Logger;
@@ -59,6 +56,12 @@ public class Dispatcher {
 				context.status (401);
 				
 				context.json (new JsonResponse ("Error! Unauthorized", false, null, "/login"));
+			}
+			
+			else if (exception.getClass () == InvalidValueException.class) {
+				context.status (400);
+				
+				context.json (new JsonResponse (exception.getMessage (), false));
 			}
 			
 			else if (exception.getClass () == SQLException.class || exception.getClass () == PSQLException.class) {

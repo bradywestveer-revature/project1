@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class UserController {
 	private static final UserService userService = new UserService ();
 	
-	public static void logInUser (Context context) throws InvalidBodyException, InvalidPasswordException, SQLException, UnauthorizedException, NotFoundException {
+	public static void logInUser (Context context) throws InvalidBodyException, InvalidPasswordException, SQLException, NotFoundException {
 		CredentialsBody body = context.bodyAsClass (CredentialsBody.class);
 		
 		String username = body.getUsername ();
