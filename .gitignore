@@ -1,4 +1,4 @@
-.idea/
+**/.idea/
 **/target/
-h2/**
-logs.txt
+**/h2/
+**/logs.txt
