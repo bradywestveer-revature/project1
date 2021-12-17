@@ -1,9 +1,9 @@
 deploy to ec2
-allow receipts
 create presentation plan
 
 intellij cleanup code
 
+allow receipts
 fix amount rounding problems
 delete requests
 create/read/update/delete users as manager
