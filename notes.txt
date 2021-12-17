@@ -1,8 +1,3 @@
-deploy to ec2
-create presentation plan
-
-intellij cleanup code
-
 allow receipts
 fix amount rounding problems
 delete requests

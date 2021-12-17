@@ -1,6 +1,5 @@
 package main;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
 import frontcontroller.FrontController;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
