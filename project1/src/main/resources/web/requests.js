@@ -174,7 +174,7 @@ if (localStorage.userRole === "EMPLOYEE") {
 			method: "POST",
 			
 			body: JSON.stringify ({
-				amount: requestsCreateAmount.value,
+				amount: parseFloat (requestsCreateAmount.value),
 				type: requestsCreateType.value,
 				description: requestsCreateDescription.value
 			})
