@@ -14,7 +14,7 @@ public class Main {
 		
 		try {
 			for (int i = 1; i < 4; i++) {
-				driver.get ("http://localhost/login");
+				driver.get ("http://3.137.152.242/login/");
 				
 				WebElement usernameInput = driver.findElement (By.id ("usernameInput"));
 				WebElement passwordInput = driver.findElement (By.id ("passwordInput"));
