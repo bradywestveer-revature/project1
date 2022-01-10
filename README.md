@@ -20,9 +20,10 @@ This project is an expense reimbursement system. There are employees, managers, 
 - Selenium
 
 # Get Started
-- Clone the repositories linked below
+- Clone the repository
+
+`git clone https://github.com/bradywestveer-revature/project1`
+
 - Use Maven to install dependencies on the backend
 - Run the Java project
-
-# Contributors
-- Brady W
+- Access the frontend from http://localhost in your browser
